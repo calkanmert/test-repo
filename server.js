@@ -1,15 +1,25 @@
+const fs = require('fs');
+const https = require('https');
 const express = require('express');
-
 
 const app = express();
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+// SSL/TLS sertifikalarınızı ve anahtarlarınızı buraya ekleyin
+const options = {
+  key: fs.readFileSync('./private-key.pem'),
+  cert: fs.readFileSync('./certificate.crt')
+};
 
+// Express uygulamasını HTTPS sunucu ile başlatın
+const server = https.createServer(options, app);
+
+// Temel bir GET endpoint'i ekleyin
 app.get('/', (req, res) => {
-  res.send('welcome <b>Bro</b>');
+  res.send('Merhaba, bu bir HTTPS sunucudur!');
 });
 
-app.listen(8000, () => {
-  console.log('Server is live');
+// HTTPS sunucusunu belirli bir port üzerinden dinlemeye başlayın
+const port = 8000;
+server.listen(port, () => {
+  console.log(`HTTPS sunucu ${port} portunda çalışıyor`);
 });
