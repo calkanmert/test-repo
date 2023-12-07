@@ -6,7 +6,7 @@ const app = express();
 
 // SSL/TLS sertifikalarınızı ve anahtarlarınızı buraya ekleyin
 const options = {
-  key: fs.readFileSync('./private-key.pem'),
+  key: fs.readFileSync('./private.pem'),
   cert: fs.readFileSync('./certificate.crt')
 };
 
